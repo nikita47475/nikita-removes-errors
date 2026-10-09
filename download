@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+storage/*.db
+storage/jobs/
+incoming/*
+outputs/*
+os_images/*
+!os_images/.gitkeep

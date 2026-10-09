@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NIKY PRAVITEL AI</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">NIKY PRAVITEL AI</div>
+  <nav class="desktop-nav">
+    <button data-view="home">Главная</button>
+    <button data-view="check">Проверить код</button>
+    <button data-view="token">API ключи</button>
+    <button data-view="about">Как это работает</button>
+  </nav>
+  <button class="menu" id="menuBtn" aria-label="Меню">☰</button>
+</header>
+<div class="mobile-nav" id="mobileNav">
+  <button data-view="home">Главная</button>
+  <button data-view="check">Проверить код</button>
+  <button data-view="token">API ключи</button>
+  <button data-view="about">Как это работает</button>
+</div>
+<main>
+<section class="view" id="homeView">
+  <div class="hero">
+    <div class="eyebrow">CODE CHECK PLATFORM</div>
+    <h1>Проверяйте код без регистрации.</h1>
+    <p>Вставьте код или загрузите ZIP/файл проекта. Платформа выполняет безопасные статические проверки и создаёт исправленную копию там, где автоматическое исправление однозначно.</p>
+    <div class="actions">
+      <button class="primary" data-view="check">Продолжить</button>
+      <button data-view="token">Сгенерировать API токен</button>
+    </div>
+  </div>
+</section>
+<section class="view hidden" id="checkView">
+  <div class="card">
+    <div class="section-head"><h2>Проверить код</h2><span>без регистрации</span></div>
+    <label>Где создан код?</label>
+    <select id="platform"><option value="auto">Не знаю / определить автоматически</option><option value="windows">Windows</option><option value="linux">Linux</option><option value="macos">MacBook / macOS</option></select>
+    <p class="hint">Модель выбирать не требуется. Для автоматических тестов матрица целей отображается отдельно и запускается только там, где реально установлен соответствующий runner.</p>
+    <textarea id="code" placeholder="Нажмите сюда и вставьте код…"></textarea>
+    <div class="upload-zone" id="dropZone"><b>Загрузить проект</b><span>ZIP, TXT, PY, HTML, JS, CSS и другие текстовые файлы</span><input id="file" type="file" hidden accept=".zip,.txt,.py,.js,.ts,.html,.htm,.css,.sh,.bash,.ps1,.bat,.cmd,.json,.yaml,.yml"></div>
+    <div class="actions"><button class="primary" id="checkBtn">Проверить</button></div>
+    <div id="result" class="result hidden"></div>
+  </div>
+</section>
+<section class="view hidden" id="tokenView">
+  <div class="card narrow">
+    <h2>API ключи</h2>
+    <p>API-токен нужен внешнему ИИ или другой платформе, чтобы обращаться к этому сервису программно.</p>
+    <div class="warning">Не вставляйте реальный GitHub PAT в браузер, HTML или публичный репозиторий. Этот проект хранит токены сервиса в виде хэша.</div>
+    <button class="primary" id="tokenBtn">Сгенерировать API токен</button>
+    <pre id="tokenOut" class="codebox hidden"></pre>
+  </div>
+</section>
+<section class="view hidden" id="aboutView">
+  <div class="card">
+    <h2>Для роботов и ИИ</h2>
+    <p>API возвращает JSON. Для загрузки проекта используется multipart/form-data. Для вставленного кода возвращается список ошибок и поле corrected_code.</p>
+    <pre class="codebox">Authorization: Bearer npa_…
+POST /api/check
+platform=auto|windows|linux|macos
+upload=&lt;ZIP или файл&gt;
+code=&lt;текст, если файл не загружается&gt;</pre>
+    <h3>Матрица целей</h3><div id="targets"></div>
+  </div>
+</section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
